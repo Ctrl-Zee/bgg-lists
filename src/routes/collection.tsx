@@ -3,6 +3,7 @@ import { useUserCollection } from '../features/user-collection/hooks/useUserColl
 import { Button, Card, CardSection, Image } from '@mantine/core';
 import { supabase } from '../supabaseClient';
 import { requireAuth } from '../utils/auth';
+import { useUserStore } from '../stores/userStore';
 
 export const Route = createFileRoute('/collection')({
   beforeLoad: async () => {
@@ -14,9 +15,11 @@ export const Route = createFileRoute('/collection')({
 function RouteComponent() {
   const navigate = useNavigate();
   const { data } = useUserCollection();
+  const userStore = useUserStore();
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
+    await userStore.clearUser();
     if (error) {
       throw error;
     }

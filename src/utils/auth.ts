@@ -8,7 +8,6 @@ export const isAuthenticated = async () => {
 
 export const requireAuth = async () => {
   const hasSession = await isAuthenticated();
-  console.log(hasSession);
   if (!hasSession) {
     throw redirect({
       to: '/login',

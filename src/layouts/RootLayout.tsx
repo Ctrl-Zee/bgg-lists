@@ -5,14 +5,5 @@ type RootLayoutProps = {
 };
 
 export const RootLayout = ({ children }: RootLayoutProps) => {
-  return (
-    <>
-      <div className="flex h-screen flex-col overflow-hidden bg-red-100 p-8">
-        <main className="grow overflow-y-auto">
-          {children}
-          {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
-        </main>
-      </div>
-    </>
-  );
+  return <main className="h-full grow overflow-y-auto">{children}</main>;
 };
