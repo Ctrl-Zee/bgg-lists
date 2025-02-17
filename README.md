@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# Drizzle Kit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Commands
 
-Currently, two official plugins are available:
+### Schema Management
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npx drizzle-kit generate  # Generate SQL migration files from schema changes
+npx drizzle-kit migrate   # Run generated migrations against your database
+npx drizzle-kit push      # Push schema changes directly to database
+npx drizzle-kit pull      # Convert existing DB schema to Drizzle schema
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Development Tools
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```bash
+npx drizzle-kit studio   # Launch DB GUI for browsing/editing
+npx drizzle-kit check    # Detect conflicts in migration files
+npx drizzle-kit up       # Upgrade existing migration snapshots
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
+## Quick Tips
+
+- Use `generate` + `migrate` for production deployments
+- Use `push` for rapid development/testing
+- Use `pull` when working with existing databases
+- Run `check` before merging migration changes
+- Use `studio` for visual DB management
+
+## Example Config
+
+```ts
+// drizzle.config.ts
+export default defineConfig({
+  schema: './src/db/schema.ts',
+  out: './supabase/migrations',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
   },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+});
 ```
