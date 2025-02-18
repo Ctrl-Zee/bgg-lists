@@ -3,7 +3,7 @@ import { useUserCollection } from '../features/user-collection/hooks/useUserColl
 import { Button, Card, CardSection, Image } from '@mantine/core';
 import { supabase } from '../supabaseClient';
 import { requireAuth } from '../utils/auth';
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../stores/UserStore';
 
 export const Route = createFileRoute('/collection')({
   beforeLoad: async () => {

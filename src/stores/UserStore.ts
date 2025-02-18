@@ -1,11 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-
-export type LocalUser = {
-  id: string;
-  email: string;
-  name?: string;
-};
+import { LocalUser } from '../models/LocalUser';
 
 type UserStore = LocalUser & {
   setUser: (user: LocalUser) => void;

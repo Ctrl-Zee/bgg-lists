@@ -7,7 +7,8 @@ import { ActionIcon } from '@mantine/core';
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { supabase } from '../../../supabaseClient';
-import { LocalUser, useUserStore } from '../../../stores/userStore';
+import { useUserStore } from '../../../stores/UserStore';
+import { LocalUser } from '../../../models/LocalUser';
 
 const LoginFormSchema = z.object({
   email: z.string().min(1, 'Required'),
