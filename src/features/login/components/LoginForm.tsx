@@ -48,6 +48,7 @@ export const LoginForm = () => {
       userStore.setUser({
         id: data.user.id,
         email: data.user.email,
+        bggName: data.user.user_metadata?.bggName,
       } as LocalUser);
       navigate({ to: '/collection' });
     }

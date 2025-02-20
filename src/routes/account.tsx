@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Page } from '../components/Page';
 import { AccountForm } from '../features/account/components/AccountForm';
 import { useAccountInfo } from '../features/account/hooks/useAccountInfo';
-import { useUserId } from '../stores/userStore';
+import { useUserId } from '../stores/UserStore';
 
 export const Route = createFileRoute('/account')({
   component: RouteComponent,

@@ -8,7 +8,7 @@ export const profileTable = pgTable('profile', {
   firstName: text('first_name'),
   lastName: text('last_name'),
   bggName: text('bgg_name'),
-});
+}).enableRLS();
 
 export const userListTable = pgTable('user_lists', {
   id: serial('id').primaryKey(),

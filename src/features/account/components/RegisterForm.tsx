@@ -12,6 +12,7 @@ import { useToast } from '../../../hooks/useToast';
 const RegisterFormSchema = z.object({
   email: z.string().min(1, 'Required'),
   password: z.string().min(1, 'Required'),
+  bggName: z.string().min(1, 'Required'),
 });
 
 type RegisterFormType = z.infer<typeof RegisterFormSchema>;
@@ -30,6 +31,7 @@ export const RegisterForm = () => {
     defaultValues: {
       email: '',
       password: '',
+      bggName: '',
     },
   });
 
@@ -37,6 +39,11 @@ export const RegisterForm = () => {
     const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
+      options: {
+        data: {
+          bggName: formData.bggName,
+        },
+      },
     });
 
     if (error) {
@@ -86,6 +93,20 @@ export const RegisterForm = () => {
                   {showPassword ? <IconEyeClosed /> : <IconEye />}
                 </ActionIcon>
               }
+            />
+          </div>
+        )}
+      />
+      <Controller
+        name="bggName"
+        control={control}
+        render={({ field }) => (
+          <div className="mb-4 w-full">
+            <TextInput
+              {...field}
+              id={field.name}
+              error={errors.bggName?.message}
+              label="Board Game Geek Name"
             />
           </div>
         )}

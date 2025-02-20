@@ -10,6 +10,7 @@ type UserStore = LocalUser & {
 const initialState: LocalUser = {
   id: '',
   email: '',
+  bggName: '',
 };
 
 export const useUserStore = create<UserStore>()(
