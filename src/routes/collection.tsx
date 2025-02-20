@@ -4,6 +4,7 @@ import { Button, Card, CardSection, Image } from '@mantine/core';
 import { supabase } from '../supabaseClient';
 import { requireAuth } from '../utils/auth';
 import { useUserStore } from '../stores/UserStore';
+import { SortableList } from '../features/user-collection/components/SortableList';
 
 export const Route = createFileRoute('/collection')({
   beforeLoad: async () => {
@@ -14,8 +15,13 @@ export const Route = createFileRoute('/collection')({
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { data } = useUserCollection();
   const userStore = useUserStore();
+  const { data } = useUserCollection();
+  const items = data?.games.map((game) => game.name) ?? [];
+
+  const handleReorder = (items: string[]) => {
+    console.log(items);
+  };
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -31,21 +37,8 @@ function RouteComponent() {
       <Button size="compact-md" onClick={handleLogout}>
         Logout
       </Button>
-      <div>
-        {data?.games.map((game) => (
-          <Card key={game.id}>
-            <CardSection>
-              <Image
-                src={game.imageUrl}
-                alt={game.name}
-                h={100}
-                w={100}
-                radius="md"
-              />
-            </CardSection>
-          </Card>
-        ))}
-      </div>
+
+      <SortableList onReorder={handleReorder} initialItems={items} />
     </>
   );
 }
