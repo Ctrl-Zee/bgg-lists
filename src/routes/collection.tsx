@@ -1,23 +1,26 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useUserCollection } from '../features/user-collection/hooks/useUserCollection';
-import { Button, Card, CardSection, Image } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { supabase } from '../supabaseClient';
 import { requireAuth } from '../utils/auth';
 import { useUserStore } from '../stores/UserStore';
 import { SortableList } from '../features/user-collection/components/SortableList';
+import { CollectionQueryOptions } from '../features/user-collection/utils/CollectionQueryOptions';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/collection')({
   beforeLoad: async () => {
     await requireAuth();
   },
+  loader: ({ context: { queryClient } }) =>
+    queryClient.ensureQueryData(CollectionQueryOptions),
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const navigate = useNavigate();
   const userStore = useUserStore();
-  const { data } = useUserCollection();
-  const items = data?.games.map((game) => game.name) ?? [];
+  const { data } = useSuspenseQuery(CollectionQueryOptions);
+  const items = data.games.map((game) => game.name);
 
   const handleReorder = (items: string[]) => {
     console.log(items);
